@@ -1,0 +1,54 @@
+﻿@model IEnumerable<WebApplication1.Models.Student>
+
+@{
+    ViewData["Title"] = "Student List";
+}
+
+<div class="student-content-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="student-list-title">Student List</h1>
+        <a asp-action="Create" class="btn btn-create">+ Create New Student</a>
+    </div>
+
+    <div class="search-container mb-4">
+        <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search by name, course, or email..." />
+        </div>
+    </div>
+
+    <div class="table-responsive">
+    <table class="table table-hover custom-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Firstname)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Lastname)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Course)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-edit">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/student-list.js"></script>
+}

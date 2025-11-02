@@ -1,0 +1,98 @@
+@model SchoolLockerForm.Models.LockerRequest
+
+@{
+    ViewData["Title"] = "Locker Request Form";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="bg-primary text-white p-3 mb-4">
+                <h2 class="mb-0">LOCKER REQUEST FORM</h2>
+            </div>
+
+            <form asp-controller="LockerRequests" asp-action="Create" method="post" enctype="multipart/form-data" id="lockerRequestForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label>NAME <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label>SEMESTER</label>
+                            <select asp-for="Semester" class="form-control">
+                                <option value="First">First</option>
+                                <option value="Second">Second</option>
+                                <option value="Summer">Summer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label>ID NUMBER <span class="text-danger">*</span></label>
+                            <input asp-for="IdNumber" class="form-control" />
+                            <span asp-validation-for="IdNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label>CONTACT NUMBER</label>
+                            <input asp-for="ContactNumber" class="form-control" />
+                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="form-group">
+                            <label>LOCKER NUMBER</label>
+                            <input class="form-control" value="Will be assigned by admin" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-4">
+                        <div class="form-group">
+                            <label>ATTACHED STUDY LOAD AND REGISTRATION</label>
+                            <input type="file" name="registrationFile" class="form-control" accept=".pdf,.jpg,.jpeg,.png" />
+                            <div class="text-muted small">Please attach your registration form or study load (PDF, JPG, PNG)</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <div class="form-check">
+                            <input asp-for="TermsAccepted" class="form-check-input" />
+                            <label class="form-check-label">I accept the Terms of Service</label>
+                            <span asp-validation-for="TermsAccepted" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary" id="submitButton">Submit Request</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+            var form = $('#lockerRequestForm');
+            var submitBtn = $('#submitButton');
+
+            form.on('submit', function (e) {
+                if (form.valid()) {
+                    submitBtn.prop('disabled', true).text('Processing...');
+                }
+            });
+        });
+    </script>
+}

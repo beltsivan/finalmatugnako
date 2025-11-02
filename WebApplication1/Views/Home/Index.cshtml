@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="welcome-section">
+    <h1 class="welcome-title">Welcome to UC Student Portal</h1>
+    <p class="welcome-subtitle">Your gateway to student services, reservations, and locker management</p>
+</div>
+
+<div class="services-container">
+    <div class="service-card">
+        <div class="service-icon">
+            <i class="fas fa-user" style="font-size: 24px;"></i>
+        </div>
+        <h2 class="service-title">Student Information</h2>
+        <p class="service-description">Access and manage your student profile, academic records, and enrollment information.</p>
+        <a asp-controller="Student" asp-action="Index" class="service-button">Access Portal</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">
+            <i class="fas fa-calendar" style="font-size: 24px;"></i>
+        </div>
+        <h2 class="service-title">Reservation System</h2>
+        <p class="service-description">Book study rooms, schedule faculty appointments, and manage campus reservations.</p>
+        <a asp-controller="Reservation" asp-action="ResUI" class="service-button">Make Reservation</a>
+    </div>
+
+    <div class="service-card">
+        <div class="service-icon">
+            <i class="fas fa-lock" style="font-size: 24px;"></i>
+        </div>
+        <h2 class="service-title">Locker Selection</h2>
+        <p class="service-description">Select and manage your locker, view availability, and request locker changes.</p>
+        <a asp-controller="LockerRequests" asp-action="Create" class="service-button">Select Locker</a>
+    </div>
+</div>

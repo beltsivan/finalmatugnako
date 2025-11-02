@@ -1,0 +1,117 @@
+@model WebApplication1.Models.LockerRequest
+
+@{
+    ViewData["Title"] = "Locker Request Form";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-white rounded-4 shadow">
+                <div class="card-header bg-primary text-white py-3 rounded-top-4">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-lock me-2"></i>
+                        Locker Request Form
+                    </h2>
+                </div>
+                <div class="card-body bg-white px-4 py-5">
+
+                    <form asp-controller="LockerRequests" asp-action="Create" method="post" enctype="multipart/form-data" id="lockerRequestForm">
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label text-dark">Full Name <span class="text-danger">*</span></label>
+                            <input asp-for="Name" class="form-control form-control-lg" required placeholder="Enter your full name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="IdNumber" class="form-label text-dark">Student ID Number <span class="text-danger">*</span></label>
+                            <input asp-for="IdNumber" class="form-control form-control-lg" required placeholder="Enter student ID" />
+                            <span asp-validation-for="IdNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="LockerNumber" class="form-label text-dark">Locker Number <span class="text-danger">*</span></label>
+                                <input asp-for="LockerNumber" class="form-control form-control-lg" required placeholder="Enter preferred locker number" />
+                                <span asp-validation-for="LockerNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Semester" class="form-label text-dark">Semester <span class="text-danger">*</span></label>
+                                <input asp-for="Semester" class="form-control form-control-lg" required placeholder="e.g., 1st Semester 2025" />
+                                <span asp-validation-for="Semester" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ContactNumber" class="form-label text-dark">Contact Number <span class="text-danger">*</span></label>
+                            <input asp-for="ContactNumber" class="form-control form-control-lg" required placeholder="Enter your contact number" />
+                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-dark">Registration File (Upload) <span class="text-danger">*</span></label>
+                            <input type="file" name="registrationFile" class="form-control form-control-lg" accept=".pdf,.jpg,.jpeg,.png" required 
+                                   data-val="true" data-val-required="Please upload your registration file" />
+                            <div class="form-text text-dark">Accepted file types: PDF, JPG, JPEG, PNG</div>
+                            @Html.ValidationMessage("registrationFile", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input asp-for="TermsAccepted" class="form-check-input" required />
+                                <label asp-for="TermsAccepted" class="form-check-label text-dark">
+                                    I accept the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Locker Usage Policy</a>
+                                </label>
+                                <span asp-validation-for="TermsAccepted" class="text-danger d-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-3 py-3" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+                                Submit Request
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('lockerRequestForm');
+            const fileInput = form.querySelector('input[type="file"]');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            form.addEventListener('submit', function (e) {
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    e.preventDefault();
+                    alert('Please upload your registration file before submitting.');
+                    return false;
+                }
+
+                // Disable submit button to prevent double submission
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Submitting...';
+                }
+            });
+
+            // Add visual feedback when file is selected
+            fileInput.addEventListener('change', function() {
+                const fileName = this.files[0]?.name;
+                if (fileName) {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                } else {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                }
+            });
+        });
+    </script>
+}

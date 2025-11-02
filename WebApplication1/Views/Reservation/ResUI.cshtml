@@ -1,0 +1,235 @@
+﻿@model IEnumerable<WebApplication1.Models.Reservation>
+@{
+    ViewData["Title"] = "Reservation List";
+}
+
+<div class="reservation-content-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">Reservation List</h1>
+        <a asp-controller="Reservation" asp-action="Add" class="btn btn-primary">
+            + Create Reservation
+        </a>
+    </div>
+
+    <div class="search-box mb-4">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="fas fa-search text-muted"></i>
+            </span>
+            <input type="text" id="searchInput" class="form-control border-start-0" 
+                   placeholder="Search by organization, activity, speaker, or date..." />
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Organization</th>
+                    <th>Activity Title</th>
+                    <th>Date Needed</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Participants</th>
+                    <th>Date</th>
+                    <th>Speaker</th>
+                    <th>Purpose/Objective</th>
+                    <th>Equipment/Facilities</th>
+                    <th>Nature of Activity</th>
+                    <th>Source of Funds</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model)
+                {
+                    <tr>
+                        <td>@reservation.Organization</td>
+                        <td>@reservation.ActTitle</td>
+                        <td>@reservation.DateNeeded.ToString("MM/dd/yyyy")</td>
+                        <td>@reservation.TimeFrom.ToString("hh:mm tt")</td>
+                        <td>@reservation.TimeTo.ToString("hh:mm tt")</td>
+                        <td>@reservation.Participants</td>
+                        <td>@reservation.Date.ToString("MM/dd/yyyy")</td>
+                        <td>@reservation.Speaker</td>
+                        <td>@reservation.PurposeObjective</td>
+                        <td>@reservation.EquipmentFacilities</td>
+                        <td>@reservation.NatureOfActivity</td>
+                        <td>@reservation.SourceOfFunds</td>
+                        <td>
+                            <span class="badge bg-success">Approved</span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-info btn-sm text-white" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a class="btn btn-warning btn-sm text-white" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger btn-sm text-white" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr id="noResults" style="display: none;">
+                    <td colspan="14" class="text-center">No search results found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("ResUI", new { page = ViewBag.CurrentPage - 1 })">&laquo;</a>
+                </li>
+            }
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("ResUI", new { page = i })">@i</a>
+                </li>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("ResUI", new { page = ViewBag.CurrentPage + 1 })">&raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
+<style>
+    .reservation-content-wrapper {
+        padding: 2rem;
+    }
+
+    .search-box .input-group {
+        max-width: 600px;
+    }
+
+    .search-box .form-control:focus {
+        box-shadow: none;
+        border-color: #ced4da;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-group {
+        gap: 0.25rem;
+    }
+
+    .btn-group .btn {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .badge {
+        padding: 0.5em 0.75em;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Status badges */
+    .badge.bg-success {
+        background-color: #198754 !important;
+    }
+
+    .badge.bg-warning {
+        background-color: #ffc107 !important;
+        color: #000;
+    }
+
+    .badge.bg-danger {
+        background-color: #dc3545 !important;
+    }
+
+    /* Responsive table */
+    .table-responsive {
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Pagination styling */
+    .pagination {
+        margin-bottom: 0;
+    }
+
+    .page-link {
+        color: #0d6efd;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    /* Button states */
+    .btn-info:hover, .btn-warning:hover, .btn-danger:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                var rows = $("table tbody tr").not('#noResults');
+                var visibleRows = 0;
+
+                rows.each(function() {
+                    var text = $(this).text().toLowerCase();
+                    if(text.indexOf(value) > -1) {
+                        $(this).show();
+                        visibleRows++;
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                });
+
+                if (visibleRows === 0) {
+                    $('#noResults').show();
+                } else {
+                    $('#noResults').hide();
+                }
+            });
+        });
+    </script>
+}
+
+

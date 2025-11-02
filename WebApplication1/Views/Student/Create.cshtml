@@ -1,0 +1,67 @@
+﻿@model WebApplication1.Models.Student
+
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-white rounded-4 shadow">
+                <div class="card-header bg-primary text-white py-3 rounded-top-4">
+                    <h2 class="text-center mb-0">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Create Student
+                    </h2>
+                </div>
+                <div class="card-body bg-white px-4 py-5">
+                    <form method="post" asp-action="Create">
+                        <div class="mb-4">
+                            <label asp-for="Firstname" class="form-label text-dark">First Name <span class="text-danger">*</span></label>
+                            <input asp-for="Firstname" class="form-control form-control-lg" required placeholder="Enter first name" />
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Lastname" class="form-label text-dark">Last Name <span class="text-danger">*</span></label>
+                            <input asp-for="Lastname" class="form-control form-control-lg" required placeholder="Enter last name" />
+                            <span asp-validation-for="Lastname" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Course" class="form-label text-dark">Course <span class="text-danger">*</span></label>
+                            <input asp-for="Course" class="form-control form-control-lg" required placeholder="Enter course" />
+                            <span asp-validation-for="Course" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label text-dark">Email <span class="text-danger">*</span></label>
+                            <input asp-for="Email" class="form-control form-control-lg" required placeholder="Enter email address" type="email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="DateCreated" class="form-label text-dark">Date Created <span class="text-danger">*</span></label>
+                            <input asp-for="DateCreated" class="form-control form-control-lg" type="date" required />
+                            <span asp-validation-for="DateCreated" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-3 py-3" style="background: linear-gradient(to right, #0d6efd, #0a58ca);">
+                                Create Student
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

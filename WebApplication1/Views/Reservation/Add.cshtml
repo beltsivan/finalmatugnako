@@ -1,0 +1,288 @@
+﻿@model WebApplication1.Models.Reservation
+
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+
+<div class="reservation-form-wrapper">
+    <div class="form-header mb-4">
+        <h2 class="text-dark">Create New Reservation</h2>
+        <p class="text-dark">Please fill in the reservation details below</p>
+    </div>
+
+    <form method="post" asp-action="Add" class="needs-validation" novalidate>
+        <div class="card shadow-sm">
+            <div class="card-body bg-white">
+                <div class="row g-4">
+                    <!-- Organization Details -->
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Organization" class="form-control dark-text" placeholder="Enter organization name" required />
+                            <label asp-for="Organization" class="dark-label">Organization</label>
+                            <span asp-validation-for="Organization" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="ActTitle" class="form-control dark-text" placeholder="Enter activity title" required />
+                            <label asp-for="ActTitle" class="dark-label">Activity Title</label>
+                            <span asp-validation-for="ActTitle" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Venue" class="form-control dark-text" placeholder="Enter venue" required />
+                            <label asp-for="Venue" class="dark-label">Venue</label>
+                            <span asp-validation-for="Venue" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Date and Time Section -->
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="DateNeeded" class="form-control dark-text" type="date" required />
+                            <label asp-for="DateNeeded" class="dark-label">Date Needed</label>
+                            <span asp-validation-for="DateNeeded" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="TimeFrom" class="form-control dark-text" type="time" required />
+                            <label asp-for="TimeFrom" class="dark-label">Time From</label>
+                            <span asp-validation-for="TimeFrom" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="TimeTo" class="form-control dark-text" type="time" required />
+                            <label asp-for="TimeTo" class="dark-label">Time To</label>
+                            <span asp-validation-for="TimeTo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Participants" class="form-control dark-text" placeholder="Enter participants" required />
+                            <label asp-for="Participants" class="dark-label">Participants</label>
+                            <span asp-validation-for="Participants" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Speaker" class="form-control dark-text" placeholder="Enter speaker name" required />
+                            <label asp-for="Speaker" class="dark-label">Speaker</label>
+                            <span asp-validation-for="Speaker" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="PurposeObjective" class="form-control dark-text" 
+                                    placeholder="Enter purpose/objective" style="height: 100px" required></textarea>
+                            <label asp-for="PurposeObjective" class="dark-label">Purpose/Objective</label>
+                            <span asp-validation-for="PurposeObjective" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="EquipmentFacilities" class="form-control dark-text" 
+                                    placeholder="Enter required equipment and facilities" style="height: 100px" required></textarea>
+                            <label asp-for="EquipmentFacilities" class="dark-label">Equipment & Facilities Needed</label>
+                            <span asp-validation-for="EquipmentFacilities" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select asp-for="NatureOfActivity" class="form-select dark-text" required>
+                                <option value="" class="dark-text">Select nature of activity</option>
+                                <option value="Academic" class="dark-text">Academic</option>
+                                <option value="Professional" class="dark-text">Professional</option>
+                                <option value="Educational" class="dark-text">Educational</option>
+                                <option value="Social" class="dark-text">Social</option>
+                            </select>
+                            <label asp-for="NatureOfActivity" class="dark-label">Nature of Activity</label>
+                            <span asp-validation-for="NatureOfActivity" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="SourceOfFunds" class="form-control dark-text" placeholder="Enter source of funds" required />
+                            <label asp-for="SourceOfFunds" class="dark-label">Source of Funds</label>
+                            <span asp-validation-for="SourceOfFunds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Date" class="form-control dark-text" type="date" required />
+                            <label asp-for="Date" class="dark-label">Submission Date</label>
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="ResUI" class="btn btn-outline-secondary text-dark">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Submit Reservation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .reservation-form-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-header h2 {
+        color: #000;
+        font-weight: 600;
+    }
+
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+    }
+
+    .form-floating {
+        position: relative;
+    }
+
+    .form-floating > .form-control,
+    .form-floating > .form-select {
+        height: calc(3.5rem + 2px);
+        line-height: 1.25;
+        color: #000 !important;
+        background-color: #fff !important;
+    }
+
+    .form-floating > textarea.form-control {
+        height: 100px;
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+        color: #495057 !important;
+    }
+
+    .dark-text {
+        color: #000 !important;
+    }
+
+    .dark-label {
+        color: #495057 !important;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #1a237e;
+        box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+        color: #000;
+    }
+
+    .form-control::placeholder {
+        color: #6c757d;
+    }
+
+    .btn-primary {
+        background-color: #1a237e;
+        border-color: #1a237e;
+        color: #fff !important;
+    }
+
+    .btn-primary:hover {
+        background-color: #151b4f;
+        border-color: #151b4f;
+        transform: translateY(-1px);
+    }
+
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #000;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #6c757d;
+        color: #fff !important;
+        transform: translateY(-1px);
+    }
+
+    .text-danger {
+        color: #dc3545 !important;
+    }
+
+    /* Form validation styles */
+    .was-validated .form-control:valid {
+        border-color: #198754;
+        color: #000 !important;
+    }
+
+    .was-validated .form-control:invalid {
+        border-color: #dc3545;
+        color: #000 !important;
+    }
+
+    /* Selection color */
+    .form-control::selection,
+    .form-select::selection {
+        background-color: #1a237e;
+        color: #fff;
+    }
+
+    /* Make sure options in select are black */
+    select option {
+        color: #000 !important;
+        background-color: #fff !important;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        // Ensure text stays black when typing
+        document.querySelectorAll('.form-control, .form-select').forEach(function(element) {
+            element.addEventListener('input', function() {
+                this.style.color = '#000';
+            });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

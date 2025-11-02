@@ -1,0 +1,249 @@
+@model WebApplication1.Models.Reservation
+
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+
+<div class="reservation-form-wrapper">
+    <div class="form-header mb-4">
+        <h2>Create New Reservation</h2>
+        <p class="text-muted">Please fill in the reservation details below</p>
+    </div>
+
+    <form method="post" asp-action="Add" class="needs-validation" novalidate>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="row g-4">
+                    <!-- Organization Details -->
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Organization" class="form-control" placeholder="Enter organization name" required />
+                            <label asp-for="Organization">Organization</label>
+                            <span asp-validation-for="Organization" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="ActTitle" class="form-control" placeholder="Enter activity title" required />
+                            <label asp-for="ActTitle">Activity Title</label>
+                            <span asp-validation-for="ActTitle" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Venue" class="form-control" placeholder="Enter venue" required />
+                            <label asp-for="Venue">Venue</label>
+                            <span asp-validation-for="Venue" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Date and Time Section -->
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="DateNeeded" class="form-control" type="date" required />
+                            <label asp-for="DateNeeded">Date Needed</label>
+                            <span asp-validation-for="DateNeeded" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="TimeFrom" class="form-control" type="time" required />
+                            <label asp-for="TimeFrom">Time From</label>
+                            <span asp-validation-for="TimeFrom" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="TimeTo" class="form-control" type="time" required />
+                            <label asp-for="TimeTo">Time To</label>
+                            <span asp-validation-for="TimeTo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Participants" class="form-control" placeholder="Enter participants" required />
+                            <label asp-for="Participants">Participants</label>
+                            <span asp-validation-for="Participants" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Speaker" class="form-control" placeholder="Enter speaker name" required />
+                            <label asp-for="Speaker">Speaker</label>
+                            <span asp-validation-for="Speaker" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="PurposeObjective" class="form-control" placeholder="Enter purpose/objective" 
+                                    style="height: 100px" required></textarea>
+                            <label asp-for="PurposeObjective">Purpose/Objective</label>
+                            <span asp-validation-for="PurposeObjective" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="EquipmentFacilities" class="form-control" 
+                                    placeholder="Enter required equipment and facilities" style="height: 100px" required></textarea>
+                            <label asp-for="EquipmentFacilities">Equipment & Facilities Needed</label>
+                            <span asp-validation-for="EquipmentFacilities" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <select asp-for="NatureOfActivity" class="form-select" required>
+                                <option value="">Select nature of activity</option>
+                                <option value="Academic">Academic</option>
+                                <option value="Professional">Professional</option>
+                                <option value="Educational">Educational</option>
+                                <option value="Social">Social</option>
+                            </select>
+                            <label asp-for="NatureOfActivity">Nature of Activity</label>
+                            <span asp-validation-for="NatureOfActivity" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="SourceOfFunds" class="form-control" placeholder="Enter source of funds" required />
+                            <label asp-for="SourceOfFunds">Source of Funds</label>
+                            <span asp-validation-for="SourceOfFunds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Date" class="form-control" type="date" required />
+                            <label asp-for="Date">Submission Date</label>
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-transparent">
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="ResUI" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Submit Reservation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .reservation-form-wrapper {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-header h2 {
+        color: #1a237e;
+        font-weight: 600;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .form-floating {
+        position: relative;
+    }
+
+    .form-floating > .form-control,
+    .form-floating > .form-select {
+        height: calc(3.5rem + 2px);
+        line-height: 1.25;
+    }
+
+    .form-floating > textarea.form-control {
+        height: 100px;
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #1a237e;
+        box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #1a237e;
+        border-color: #1a237e;
+    }
+
+    .btn-primary:hover {
+        background-color: #151b4f;
+        border-color: #151b4f;
+        transform: translateY(-1px);
+    }
+
+    .btn-outline-secondary:hover {
+        transform: translateY(-1px);
+    }
+
+    .form-control, .form-select {
+        border: 1px solid #ced4da;
+    }
+
+    .card-footer {
+        border-top: 1px solid rgba(0,0,0,0.125);
+        padding: 1rem;
+    }
+
+    /* Form validation styles */
+    .was-validated .form-control:valid, .form-control.is-valid {
+        border-color: #198754;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    }
+
+    .was-validated .form-control:invalid, .form-control.is-invalid {
+        border-color: #dc3545;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

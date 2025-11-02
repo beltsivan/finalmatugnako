@@ -1,0 +1,91 @@
+@model WebApplication1.Models.Reservation
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="row">
+    <dive class="col-md-4">
+        <form method="post" asp-action="Add">
+            <div class="form-group">
+                <label asp-for="Organization" class="control-label"></label>
+                <input asp-for="Organization" class="form-control" />
+                <span asp-validation-for="Organization" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActTitle" class="control-label"></label>
+                <input asp-for="ActTitle" class="form-control" />
+                <span asp-validation-for="ActTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Venue" class="control-label"></label>
+                <input asp-for="Venue" class="form-control" />
+                <span asp-validation-for="Venue" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DateNeeded" class="control-label"></label>
+                <input asp-for="DateNeeded" class="form-control" type="date" />
+                <span asp-validation-for="DateNeeded" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TimeFrom" class="control-label"></label>
+                <input asp-for="TimeFrom" class="form-control" />
+                <span asp-validation-for="TimeFrom" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TimeTo" class="control-label"></label>
+                <input asp-for="TimeTo" class="form-control" />
+                <span asp-validation-for="TimeTo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Participants" class="control-label"></label>
+                <input asp-for="Participants" class="form-control" />
+                <span asp-validation-for="Participants" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Speaker" class="control-label"></label>
+                <input asp-for="Speaker" class="form-control" />
+                <span asp-validation-for="Speaker" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PurposeObjective" class="control-label"></label>
+                <input asp-for="PurposeObjective" class="form-control" />
+                <span asp-validation-for="PurposeObjective" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EquipmentFacilities" class="control-label"></label>
+                <input asp-for="EquipmentFacilities" class="form-control" />
+                <span asp-validation-for="EquipmentFacilities" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NatureOfActivity" class="control-label"></label>
+                <input asp-for="NatureOfActivity" class="form-control" />
+                <span asp-validation-for="NatureOfActivity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SourceOfFunds" class="control-label"></label>
+                <input asp-for="SourceOfFunds" class="form-control" />
+                <span asp-validation-for="SourceOfFunds" class="text-danger"></span>
+            </div>
+            <div class="mt-4">
+                <button asp-action="ResUI" class="btn btn-danger">Back</button>
+                <button class="btn btn-primary">submit</button>
+            </div>
+        </form>
+    </dive>
+</div>
