@@ -1,0 +1,94 @@
+@model IEnumerable<WebApplication1.Models.LockerRequest>
+@{
+    ViewData["Title"] = "My Locker Requests";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Locker Requests</h2>
+        <a asp-controller="LockerRequests" asp-action="Create" class="btn btn-primary">+ New Request</a>
+    </div>
+
+    <div class="search-box mb-4">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+                <i class="fas fa-search text-muted"></i>
+            </span>
+            <input type="text" id="lockerSearchInput" class="form-control border-start-0" placeholder="Search by name or student ID..." />
+        </div>
+    </div>
+
+        @section Scripts {
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var input = document.getElementById('lockerSearchInput');
+                    if (!input) return;
+                    var rows = function() { return Array.from(document.querySelectorAll('.table tbody tr')).filter(r => r.id !== 'noResults'); };
+                    var noResults = document.getElementById('noResults');
+
+                    input.addEventListener('input', function(e) {
+                        var q = e.target.value.toLowerCase().trim();
+                        var visible = 0;
+                        rows().forEach(function(r) {
+                            // name is in cell index 1, id is index 2
+                            var name = (r.cells[1]?.textContent || '').toLowerCase();
+                            var id = (r.cells[2]?.textContent || '').toLowerCase();
+                            if (!q || name.indexOf(q) > -1 || id.indexOf(q) > -1) {
+                                r.style.display = 'table-row';
+                                visible++;
+                            } else {
+                                r.style.display = 'none';
+                            }
+                        });
+                        if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+                    });
+                });
+            </script>
+        }
+
+    <div class="table-responsive">
+        <table class="table table-hover" style="color: white">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Locker</th>
+                    <th>Semester</th>
+                    <th>Contact</th>
+                    <th>File</th>
+                    <th>Status</th>
+                    <th>Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int counter = 1; }
+                @foreach (var r in Model)
+                {
+                    <tr style="color: white">
+                        <td>@(counter++)</td>
+                        <td>@r.Name</td>
+                        <td>@r.IdNumber</td>
+                        <td>@r.LockerNumber</td>
+                        <td>@r.Semester</td>
+                        <td>@r.ContactNumber</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(r.RegistrationFilePath))
+                            {
+                                <a href="@r.RegistrationFilePath" target="_blank">View</a>
+                            }
+                        </td>
+                        <td>
+                            @{ var status = r.Approved == null ? "Pending" : r.Approved == true ? "Approved" : "Rejected"; }
+                            <span class="@(status == "Approved" ? "text-success" : status == "Rejected" ? "text-danger" : "text-warning")">@status</span>
+                        </td>
+                        <td>@r.CreatedAt.ToLocalTime().ToString("MM/dd/yyyy HH:mm")</td>
+                    </tr>
+                }
+                <tr id="noResults" style="display:none;color: white;">
+                    <td colspan="9" class="text-center">No search results found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

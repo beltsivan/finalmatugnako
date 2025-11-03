@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,24 @@ namespace MyWebApplication.Controllers
             IEnumerable<Student> objStudentList = _db.Students;
             //var objStudentList = _db.Students.ToList();
             return View(objStudentList);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminList(int page = 1)
+        {
+            int pageSize = 5;
+            var query = _db.Students.OrderBy(s => s.Id);
+            var totalRecords = query.Count();
+            var objStudentList = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            if (Request.Headers.ContainsKey("X-Requested-With") && Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("AdminList", objStudentList);
+            }
+            return View("AdminList", objStudentList);
         }
         //GET
         public IActionResult Create()

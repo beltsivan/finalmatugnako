@@ -117,11 +117,38 @@ namespace WebApplication1.Controllers
         // simple submitted confirmation
         public IActionResult Submitted() => View();
 
-        // Admin list page
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public IActionResult Admin()
+        // Public list of locker requests (for users to view their requests/status)
+        // Optional idNumber filter: ?idNumber=12345
+    public IActionResult List(string? idNumber = null)
         {
-            var list = _context.LockerRequests.OrderByDescending(x => x.CreatedAt).ToList();
+            var query = _context.LockerRequests.AsQueryable();
+            if (!string.IsNullOrEmpty(idNumber))
+            {
+                query = query.Where(r => r.IdNumber == idNumber);
+            }
+
+            var list = query.OrderByDescending(r => r.CreatedAt).ToList();
+            return View(list);
+        }
+
+        // Admin list page with pagination
+        [Microsoft.AspNetCore.Authorization.Authorize]
+        public IActionResult Admin(int page = 1)
+        {
+            int pageSize = 5;
+            var query = _context.LockerRequests.OrderByDescending(x => x.CreatedAt);
+            var totalRecords = query.Count();
+            var list = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Return partial for AJAX requests
+            if (Request.Headers.ContainsKey("X-Requested-With") && Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("Admin", list);
+            }
+
             return View(list);
         }
 
