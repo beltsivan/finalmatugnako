@@ -13,9 +13,18 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <span style="color: #3498db;">UC</span> University of Cebu
-                </a>
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <span style="color: #3498db;">UC</span> University of Cebu
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login">
+                        <span style="color: #3498db;">UC</span> University of Cebu
+                    </a>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,21 +34,25 @@
                     <ul class="navbar-nav">
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="LockerRequests" asp-action="Admin">Admin Panel</a>
-                            </li>
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="LockerRequests" asp-action="Admin">Admin Panel</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <span class="nav-link text-dark">Welcome, @User.Identity.Name!</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-warning" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                    <a class="nav-link" style="color: red;" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
+                            /*
                             <li class="nav-item">
                                 <a class="btn btn-primary" style="background-color: #1e3d8f; border: none;" asp-area="" asp-controller="Account" asp-action="Login">Admin Login</a>
-                            </li>
+                            </li>*/
                         }
                     </ul>
                 </div>

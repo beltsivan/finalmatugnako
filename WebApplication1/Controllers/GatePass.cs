@@ -24,9 +24,9 @@ namespace WebApplication1.Controllers
             IEnumerable<GatePassModel> gatepasses = _db.GatePasses.OrderByDescending(g => g.DateSubmitted).ToList();
             return View(gatepasses);
         }
-        // Admin list with pagination
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public IActionResult AdminList(int page = 1)
+    // Admin list with pagination
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public IActionResult AdminList(int page = 1)
         {
             int pageSize = 5;
             var query = _db.GatePasses.OrderByDescending(g => g.DateSubmitted);
@@ -44,10 +44,10 @@ namespace WebApplication1.Controllers
             return View("AdminList", list);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public IActionResult Approve(int id, bool approve)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public IActionResult Approve(int id, bool approve)
         {
             var gp = _db.GatePasses.Find(id);
             if (gp == null) return NotFound();
@@ -63,10 +63,10 @@ namespace WebApplication1.Controllers
             return RedirectToAction("AdminList");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public IActionResult Delete(int id)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public IActionResult Delete(int id)
         {
             var gp = _db.GatePasses.Find(id);
             if (gp == null) return NotFound();

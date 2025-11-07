@@ -131,9 +131,9 @@ namespace WebApplication1.Controllers
             return View(list);
         }
 
-        // Admin list page with pagination
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public IActionResult Admin(int page = 1)
+    // Admin list page with pagination
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public IActionResult Admin(int page = 1)
         {
             int pageSize = 5;
             var query = _context.LockerRequests.OrderByDescending(x => x.CreatedAt);
@@ -153,10 +153,10 @@ namespace WebApplication1.Controllers
         }
 
         // Approve/Reject action
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Microsoft.AspNetCore.Authorization.Authorize]
-        public async Task<IActionResult> Approve(int id, bool approve)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Approve(int id, bool approve)
         {
             var req = await _context.LockerRequests.FindAsync(id);
             if (req == null) return NotFound();
@@ -180,9 +180,10 @@ namespace WebApplication1.Controllers
         }
 
         // Delete action
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Delete(int id)
         {
             var request = await _context.LockerRequests.FindAsync(id);
             if (request == null) return NotFound();

@@ -1,0 +1,131 @@
+@model WebApplication1.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Sign up";
+}
+
+<div class="reservation-form-wrapper">
+    <div class="form-header mb-4">
+        <h2 style="color: white">Create Student Account</h2>
+        <p style="color: white">Create your student account to access student features</p>
+    </div>
+
+    <form method="post" asp-action="Register" class="needs-validation" novalidate>
+        @Html.AntiForgeryToken()
+        <div class="card shadow-sm">
+            <div class="card-body bg-white">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="SchoolIdNumber" class="form-control dark-text" placeholder="School ID Number" required />
+                            <label asp-for="SchoolIdNumber" class="dark-label" style="color: black">School ID Number</label>
+                            <span asp-validation-for="SchoolIdNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Username moved down next to password fields to keep credentials grouped -->
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Firstname" class="form-control dark-text" placeholder="First Name" required />
+                            <label asp-for="Firstname" class="dark-label" style="color: black">First Name</label>
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Lastname" class="form-control dark-text" placeholder="Last Name" required />
+                            <label asp-for="Lastname" class="dark-label" style="color: black">Last Name</label>
+                            <span asp-validation-for="Lastname" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Age / Course / Email in a single row on md+ screens -->
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Age" type="number" class="form-control dark-text" placeholder="Age" required />
+                            <label asp-for="Age" class="dark-label" style="color: black">Age</label>
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Course" class="form-control dark-text" placeholder="Course" />
+                            <label asp-for="Course" class="dark-label" style="color: black">Course</label>
+                            <span asp-validation-for="Course" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Username" class="form-control dark-text" placeholder="Username" required />
+                            <label asp-for="Username" class="dark-label" style="color: black">Username</label>
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control dark-text" placeholder="Email" required />
+                            <label asp-for="Email" class="dark-label" style="color: black">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Credentials grouped together: Username | Password | Confirm -->
+                    
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control dark-text" placeholder="Password" />
+                            <label asp-for="Password" class="dark-label" style="color: black">Password</label>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control dark-text" placeholder="Confirm Password" />
+                            <label asp-for="ConfirmPassword" class="dark-label" style="color: black">Confirm Password</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-footer bg-white">
+                <div class="d-flex justify-content-end gap-2">
+                    <a asp-action="Login" class="btn btn-outline-secondary text-dark">
+                        <i class="fas fa-arrow-left me-2"></i>Back to login
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) { event.preventDefault(); event.stopPropagation(); }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+
+        document.querySelectorAll('.form-control, .form-select').forEach(function(element) {
+            element.addEventListener('input', function() { this.style.color = '#000'; });
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

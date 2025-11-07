@@ -1,42 +1,60 @@
 @model WebApplication1.Models.LoginViewModel
 
 @{
-    ViewData["Title"] = "Admin Login";
+    ViewData["Title"] = "Login";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4 text-dark">Admin Login</h2>
-                    <form asp-controller="Account" asp-action="Login" method="post">
-                        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
-                        
-                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                        
-                        <div class="form-floating mb-3">
-                            <input asp-for="Username" class="form-control dark-text" placeholder="Username" />
-                            <label asp-for="Username" class="text-dark">Username</label>
-                            <span asp-validation-for="Username" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="form-floating mb-4">
-                            <input asp-for="Password" class="form-control dark-text" placeholder="Password" />
-                            <label asp-for="Password" class="text-dark">Password</label>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
-                        </div>
-                    </form>
+<div class="auth-card-wrapper">
+    <div class="auth-card shadow-sm">
+        <div class="auth-header text-center">
+            <h2 class="auth-title">Sign In</h2>
+        </div>
+
+        <div class="card-body px-4 py-4">
+            @if (TempData["RegisterSuccess"] != null)
+            {
+                <div class="alert alert-success">@TempData["RegisterSuccess"]</div>
+            }
+
+            <form asp-controller="Account" asp-action="Login" method="post" class="needs-validation" novalidate>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Username" class="form-control" placeholder="Username" />
+                    <label asp-for="Username">Username</label>
+                    <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
-            </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Password" class="form-control" placeholder="Password" type="password" />
+                    <label asp-for="Password">Password</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-fill">Login</button>
+                    <a asp-action="Register" asp-controller="Account" class="btn btn-outline-primary flex-fill">Sign Up</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 @section Scripts {
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) { event.preventDefault(); event.stopPropagation(); }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }
